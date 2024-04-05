@@ -17,9 +17,9 @@ CTime::CTime(const CTime& time)
 	minutes = time.minutes;
 	seconds = time.seconds;
 }
-Statys CTime::check(const CTime* time) {
+Statys CTime::check() {
 	Statys state = SUCCESS;
-	if (time->hours < 0 || time->hours > 23 || time->minutes < 0 || time->minutes > 59 || time->seconds < 0 || time->seconds > 59) state = ERROR;
+	if (hours < 0 || hours > 23 || minutes < 0 || minutes > 59 || seconds < 0 || seconds > 59) state = ERROR;
 	return state;
 }
 Statys CTime::input() {
@@ -28,34 +28,34 @@ Statys CTime::input() {
 	std::cin >> hours >> colon
 		>> minutes >> colon
 		>> seconds;
-	state = check(this);
+	state = check();
 	
 	return state;
 }
-Statys CTime::set_values(CTime* time, int hours, int minutes, int seconds) {
+Statys CTime::set_values( int hours_, int minutes_, int seconds_) {
 	Statys state = SUCCESS;
-	time->hours = hours;
-	time->minutes = minutes;
-	time->seconds = seconds;
+	hours = hours;
+	minutes = minutes;
+	seconds = seconds;
 	return state;
 }
-Statys CTime::convert(CTime* time) {
+Statys CTime::convert() {
 	Statys state = SUCCESS;
-	if (time->seconds >= 60) {
-		time->minutes += 1;
-		time->seconds = time->seconds - 60;
+	if (seconds >= 60) {
+		minutes += 1;
+		seconds = seconds - 60;
 	}
-	if (time->minutes >= 60) {
-		time->hours += 1;
-		time->minutes = time->minutes - 60;
+	if (minutes >= 60) {
+		hours += 1;
+		minutes = minutes - 60;
 	}
-	if (time->hours >= 24) {
-		time->hours = time->hours - 24;
+	if (hours >= 24) {
+		hours = hours - 24;
 		return WARNING;
 	}
 	return state;
 }
-Statys CTime::add_hours(int hours_, int hours) {
+Statys CTime::add_hours(int hours_) {
 	Statys state = SUCCESS;
 	hours += hours_;
 	if (hours >= 23) {
@@ -64,7 +64,7 @@ Statys CTime::add_hours(int hours_, int hours) {
 	}
 	return state;
 }
-Statys CTime::add_minutes(int minutes_, int minutes) {
+Statys CTime::add_minutes(int minutes_) {
 	Statys state = SUCCESS;
 	minutes += minutes_;
 	if (minutes >= 60) {
@@ -73,7 +73,7 @@ Statys CTime::add_minutes(int minutes_, int minutes) {
 	}
 	return state;
 }
-Statys CTime::add_seconds(int seconds_, int  seconds) {
+Statys CTime::add_seconds(int seconds_) {
 	Statys state = SUCCESS;
 	seconds += seconds_;
 	if (seconds >= 60) {
@@ -82,30 +82,29 @@ Statys CTime::add_seconds(int seconds_, int  seconds) {
 	}
 	return state;
 }
-Statys CTime::assign(CTime* time1, const CTime* time2) {
+Statys CTime::assign(CTime& time) {
 	Statys state = SUCCESS;
-	if (time2 == nullptr) state = ERROR;
-	else {
-		this->hours = this->hours;
-		this->minutes = this->minutes;
-		this->seconds = this->seconds;
-	}
+	 
+		time.hours = hours;
+		time.minutes = minutes;
+		time.seconds = seconds;
+	
 	return state;
 }
-int CTime::compare(const CTime* time1, const CTime* time2) {
-	Statys state = SUCCESS;
-	if (time1->hours == time2->hours && time1->minutes == time2->minutes && time1->seconds == time2->seconds) return 0;
+int CTime::compare(const CTime& time) {
+	if (hours == time.hours && minutes == time.minutes && seconds == time.seconds) return 0;
 
 	// time1 > time2
-	if (time1->hours > time2->hours) return 1;
-	if (time1->minutes > time2->minutes && time2->hours <= time1->hours) return 1;
-	if (time1->seconds > time2->seconds && time2->minutes <= time1->minutes && time2->hours <= time1->hours) return 1;
+	if (hours > time.hours) return 1;
+	if (minutes > time.minutes && time.hours <= hours) return 1;
+	if (seconds > time.seconds && time.minutes <= minutes && time.hours <= hours) return 1;
 
 	// time1 < time2
-	if (time2->hours > time1->hours) return -1;
-	if (time2->minutes > time1->minutes && time1->hours <= time2->hours) return -1;
-	if (time2->seconds > time1->seconds && time1->minutes <= time2->minutes && time1->hours <= time2->hours) return -1;
+	if (time.hours > hours) return -1;
+	if (time.minutes > minutes && hours <= time.hours) return -1;
+	if (time.seconds > seconds && minutes <= time.minutes && hours <= time.hours) return -1;
 }
+
 void PrintMassage(Statys state) {
 	if (state == SUCCESS) std::cout << "\n" << "SUCCESS" << "\n";
 	else if (state == WARNING) std::cout << "\n" << "WARNING" << "\n";
