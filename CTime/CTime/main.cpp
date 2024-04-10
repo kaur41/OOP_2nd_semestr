@@ -150,5 +150,4 @@ int main() {
 	t2.output();
 	compare = t3.compare(t2);
 	std::cout << compare << std::endl;
-
 }

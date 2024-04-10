@@ -7,9 +7,9 @@ CTime::CTime() {
 }
 CTime::CTime(int hour_, int minutes_, int seconds_)
 {
-	int hours = hour_;
-	int minutes = minutes_;
-	int seconds = seconds_;
+	 hours = hour_;
+	 minutes = minutes_;
+	 seconds = seconds_;
 }
 CTime::CTime(const CTime& time)
 {
@@ -105,13 +105,14 @@ int CTime::compare(const CTime& time) {
 	if (time.seconds > seconds && minutes <= time.minutes && hours <= time.hours) return -1;
 }
 
-void PrintMassage(Statys state) {
-	if (state == SUCCESS) std::cout << "\n" << "SUCCESS" << "\n";
-	else if (state == WARNING) std::cout << "\n" << "WARNING" << "\n";
-	else if (state == ERROR) std::cout << "\n" << "ERROR" << "\n";
-}
+//void PrintMassage(Statys state) {
+//	if (state == SUCCESS) std::cout << "\n" << "SUCCESS" << "\n";
+//	else if (state == WARNING) std::cout << "\n" << "WARNING" << "\n";
+//	else if (state == ERROR) std::cout << "\n" << "ERROR" << "\n";
+//}
 void CTime::output() {
 	std::cout << hours << ":"
 		<< minutes << ":"
 		<< seconds << std::endl;
 }
+CTime::~CTime() {}

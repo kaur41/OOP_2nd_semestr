@@ -16,6 +16,8 @@ public:
 	Statys add_seconds( int seconds_);
 	Statys assign(CTime&time);
 	int compare(const CTime& time);
-	void PrintMassage(Statys state);
+//	void PrintMassage(Statys state);
 	void output();
+	~CTime();
+
 };
